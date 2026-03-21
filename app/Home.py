@@ -1,6 +1,6 @@
 # ============================================================
 # PCC - Personal Command Center
-# File: main.py
+# File: Home.py
 # Purpose: Main landing page of the PCC application
 # This file acts as the entry point for the Streamlit multi-page app.
 # ============================================================
