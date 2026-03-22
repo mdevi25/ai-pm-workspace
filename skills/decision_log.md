@@ -1,78 +1,43 @@
-#---------------------------------Log 3-------------------
-"""
-Date: 03-21-2026
-File: pages/Decision_Log.py
-Project: PCC (Personal Command Center)
-Milestone: PCC.M3.S2 - Session State Foundation
 
-OBJECTIVE:
-This page captures important architectural and product decisions.
-These decisions are stored in session state for now and will later be stored in a database.
+#----------------------------Log 3-----------------
+# PCC Decision Log
 
-WHY DECISION LOG EXISTS:
-In AI systems and product development, decisions are important data.
-Later we will track:
-- Human overrides
-- Architecture changes
-- Model changes
-- Workflow changes
-- Risk decisions
-- Governance decisions
+This document records major architecture and product decisions for the Personal Command Center (PCC) project.
 
-For now, we log:
-- Decision Title
-- Decision Description
-- Decision Date
-"""
+---
 
-import streamlit as st
-from core.session_state import init_session
+## PCC.M3.S2 — Session State Foundation
 
-# Initialize session state
-init_session()
+**Date:** 2026-03-21  
+**Decision:** Implement session state management and layered architecture.
 
-st.title("Decision Log")
+**Details:**
+- Created `core/session_state.py` to manage session variables.
+- Separated architecture into layers:
+  - `main.py` → Application Initialization Layer
+  - `core/` → Logic Layer
+  - `pages/` → UI Layer
+  - `data/` → Data Layer
+  - `memory/` → Logs and memory layer
+  - `docs/` → Documentation
+- Moved `core`, `data`, `docs`, and `memory` folders inside `app/` to fix module import issues.
+- Established session variables:
+  - user
+  - authenticated
+  - active_project
+  - active_job
+  - decision_log
 
-st.write("This page records important project and system decisions.")
+**Reason:**
+This structure allows PCC to scale into a multi-project AI orchestration platform with session memory, governance logging, and workflow tracking.
 
-
-# ---------------------------------------------------
-# Input Section — Add New Decision
-# ---------------------------------------------------
-st.subheader("Add New Decision")
-
-decision_title = st.text_input("Decision Title")
-decision_description = st.text_area("Decision Description")
-
-if st.button("Add Decision"):
-    if decision_title and decision_description:
-        decision_entry = {
-            "title": decision_title,
-            "description": decision_description
-        }
-
-        # Store decision in session state list
-        st.session_state.decision_log.append(decision_entry)
-
-        st.success("Decision added to log.")
-    else:
-        st.warning("Please enter both title and description.")
-
-
-# ---------------------------------------------------
-# Display Section — Show Decision Log
-# ---------------------------------------------------
-st.subheader("Decision History")
-
-if st.session_state.decision_log:
-    for i, decision in enumerate(st.session_state.decision_log, start=1):
-        st.write(f"### Decision {i}")
-        st.write(f"**Title:** {decision['title']}")
-        st.write(f"**Description:** {decision['description']}")
-else:
-    st.info("No decisions logged yet.")
-
-
+**Impact:**
+This decision establishes the foundation for:
+- Authentication
+- Project context tracking
+- Decision governance
+- n8n job tracking
+- Human-in-the-loop override logging
 
 #------------------------------Log 2------------
 # Update decision_log.md for this
