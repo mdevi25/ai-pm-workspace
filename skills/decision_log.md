@@ -6,7 +6,7 @@ This document records major architecture and product decisions for the Personal 
 
 ---
 
-## PCC.M3.S2 — Session State Foundation
+## PCC.M3.S2 — Session State Foundation Complete
 
 **Date:** 2026-03-21  
 **Decision:** Implement session state management and layered architecture.
