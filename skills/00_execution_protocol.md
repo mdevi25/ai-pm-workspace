@@ -29,6 +29,13 @@ For EVERY step, the following must be specified:
 6. What output to expect
 7. How to validate success
 8. What to do if error happens
+9. Do not change syntax 
+10. Do not derail the response quality
+11. Do not hallucinate
+12. Ask question, where not clear
+13. Must include inline comments including header in every file
+14. Update decision_log
+14. Reference changement skills to transition from execution to delivery.
 
 No step should skip these.
 

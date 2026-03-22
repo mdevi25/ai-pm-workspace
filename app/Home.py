@@ -1,56 +1,85 @@
-# ============================================================
-# PCC - Personal Command Center
-# File: Home.py
-# Purpose: Main landing page of the PCC application
-# This file acts as the entry point for the Streamlit multi-page app.
-# ============================================================
+"""
+File: pages/Home.py
+Project: PCC (Personal Command Center)
+Milestone: PCC.M3.S2 - Session State Foundation
 
-import streamlit as st
+OBJECTIVE:
+This file represents the Home (Landing Page) of the PCC application.
+It is the first page users should visit after the system initializes.
 
-# ------------------------------------------------------------
-# Page configuration (must be the first Streamlit command)
-# ------------------------------------------------------------
-st.set_page_config(
-    page_title="PCC - Personal Command Center",  # Browser tab title
-    page_icon="🧭",                              # Browser tab icon
-    layout="wide"                                # Use full screen width
-)
+WHAT THIS PAGE DOES:
+1. Initializes session state for this page.
+2. Displays welcome message.
+3. Simulates login/logout functionality (for testing session state).
+4. Displays current session state for validation.
 
-# ------------------------------------------------------------
-# Main Page Content
-# ------------------------------------------------------------
-st.title("PCC - Personal Command Center")
-st.caption("Base multi-page application shell")
+WHY THIS PAGE EXISTS:
+We need a landing page where users:
+- Enter the system
+- Log in
+- Select project (future)
+- View system status (future)
 
-# ------------------------------------------------------------
-# Section: Welcome
-# ------------------------------------------------------------
-st.markdown("## Welcome")
-st.write(
-    "This is the main entry page for PCC. "
-    "Use the sidebar to navigate across modules."
-)
+SESSION VARIABLES USED HERE:
+- st.session_state.user
+- st.session_state.authenticated
+- st.session_state.active_project
+- st.session_state.active_job
+- st.session_state.decision_log
 
-# ------------------------------------------------------------
-# Section: Current Milestone
-# This helps track platform build progress inside the UI
-# ------------------------------------------------------------
-st.markdown("## Current Milestone")
-st.info("PCC.M3.S1 - Multi-page structure is established.")
+DEPENDENCIES:
+- core/session_state.py → provides login(), logout(), init_session()
 
-# ------------------------------------------------------------
-# Section: Available Sections (Navigation Guidance)
-# ------------------------------------------------------------
-st.markdown("## Available Sections")
-st.write("- Dashboard")
-st.write("- Project Workspace")
+EXPECTED BEHAVIOR:
+- If not logged in → show Login button
+- If logged in → show Welcome message + Logout button
+- Session state should persist across pages
+"""
 
-# ------------------------------------------------------------
-# Section: Next Intent
-# Explains why this layer exists in the architecture
-# ------------------------------------------------------------
-st.markdown("## Next Intent")
-st.write(
-    "This layer creates the navigational foundation so future features "
-    "can be added page by page without restructuring the app."
-)
+import streamlit as st  # Streamlit UI library
+from core.session_state import init_session, login, logout  # Session management functions
+
+
+# ---------------------------------------------------
+# STEP 1 — Initialize Session State
+# Ensures session variables exist before page uses them.
+# ---------------------------------------------------
+init_session()
+
+
+# ---------------------------------------------------
+# STEP 2 — Page Title and Description
+# ---------------------------------------------------
+st.title("Home - Personal Command Center")
+st.write("Welcome to PCC. This is your central control panel.")
+
+
+# ---------------------------------------------------
+# STEP 3 — Login / Logout Section
+# This is a TEST login system to verify session state works.
+# Real authentication will be added in later milestones.
+# ---------------------------------------------------
+if not st.session_state.authenticated:
+    st.info("Status: Logged Out")
+
+    # When user clicks this button, login() function is called
+    # This updates session_state.user and session_state.authenticated
+    if st.button("Login (Test User)"):
+        login("Madhu")
+        st.success("Login successful. Session state updated.")
+
+else:
+    st.success(f"Welcome, {st.session_state.user}")
+
+    # Logout button clears session variables
+    if st.button("Logout"):
+        logout()
+        st.warning("You have been logged out.")
+
+
+# ---------------------------------------------------
+# STEP 4 — Session State Debug Viewer
+# This helps us confirm session memory is working.
+# ---------------------------------------------------
+st.subheader("Session State (Debug View)")
+st.write(st.session_state)
