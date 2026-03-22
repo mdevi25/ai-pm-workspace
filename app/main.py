@@ -33,7 +33,7 @@ All UI pages must live inside /pages folder.
 """
 
 import streamlit as st  # Streamlit framework
-from core.session_state import init_session  # Import session initialization function
+from app.core.session_state import init_session  # Import session initialization function
 
 
 # ---------------------------------------------------

@@ -25,7 +25,7 @@ For now, we log:
 """
 
 import streamlit as st
-from core.session_state import init_session
+from app.core.session_state import init_session
 
 # Initialize session state
 init_session()

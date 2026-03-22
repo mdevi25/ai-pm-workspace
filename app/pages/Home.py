@@ -37,7 +37,7 @@ EXPECTED BEHAVIOR:
 """
 
 import streamlit as st  # Streamlit UI library
-from core.session_state import init_session, login, logout  # Session management functions
+from app.core.session_state import init_session, login, logout  # Session management functions
 
 
 # ---------------------------------------------------
